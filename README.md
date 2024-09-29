@@ -11,13 +11,13 @@ this mod works fine if installed only on the client, but in order to prevent fal
 - surfing on stairs
 
 ### build instructions
-1. Clone the git repository
-2. Navigate into the cloned directory
-3. Run `./gradlew build`
+1. clone the git repository
+2. navigate into the cloned directory
+3. run `./gradlew build`
 
-The built jar file will be in `build/libs/`
+the built jar file will be in `build/libs/`
 
-### Credits
+### credits
 - [Polina4096](https://github.com/polina4096) for creating [re:squake](https://github.com/polina4096/resquake)
 - [Tlesis](https://github.com/Tlesis) and [LeviOP](https://github.com/LeviOP) for [SquakePlusPlus fork](https://github.com/Tlesis/SquakePlusPlus)
 - [He11crow](https://github.com/He11crow) for [porting](https://github.com/He11crow/SquakeFabric) the original to fabric [(Modrinth)](https://modrinth.com/mod/squakefabric)
