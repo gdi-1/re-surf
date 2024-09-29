@@ -1,6 +1,6 @@
 <h1 align="center">
 <img src="src/main/resources/assets/resquake/icon.png">
-<br>re:squake
+<br>re:surf
 </h1>
  
 a fork of re:squake that adds surfing on stairs to the mod. requires [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin), depends on [YetAnotherConfigLib](https://modrinth.com/mod/yacl), [Fabric API](https://modrinth.com/mod/fabric-api) and optionally [Mod Menu](https://modrinth.com/mod/modmenu).
