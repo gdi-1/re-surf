@@ -1,10 +1,10 @@
 {
-  "category.resquake": "re:squake",
-  "key.resquake.toggle": "Toggle re:squake",
-  "key.resquake.config": "Open re:squake config",
-  "resquake.enabled": "re:squake enabled",
-  "resquake.disabled": "re:squake disabled",
-  "stat.resquake.trimps": "Trimps",
-  "stat.resquake.bhop_one_cm": "Distance Bunny-Hopped",
-  "stat.resquake.shark_one_cm": "Distance by Sharking"
+  "category.resquake": "re:surf",
+  "key.resquake.toggle": "toggle re:surf",
+  "key.resquake.config": "open re:surf config",
+  "resquake.enabled": "re:surf enabled",
+  "resquake.disabled": "re:surf disabled",
+  "stat.resquake.trimps": "trimps",
+  "stat.resquake.bhop_one_cm": "distance bunny-hopped",
+  "stat.resquake.shark_one_cm": "distance by sharking"
 }
