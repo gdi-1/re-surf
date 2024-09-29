@@ -19,6 +19,6 @@ object ReSquakeMod : ModInitializer {
 
 		ReSquakeStats.register();
 
-		logger.info("re:squake initialized!")
+		logger.info("re:surf initialized!")
 	}
 }
