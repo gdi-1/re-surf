@@ -13,7 +13,10 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.particle.BlockStateParticleEffect
 import net.minecraft.particle.ParticleTypes
 import net.minecraft.server.network.ServerPlayerEntity
+import net.minecraft.state.BlockState
+import net.minecraft.state.property.Properties
 import net.minecraft.util.math.BlockPos
+import net.minecraft.util.math.Direction
 import net.minecraft.util.math.ChunkSectionPos
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
@@ -176,7 +179,7 @@ object ReSquakePlayer {
     val wishdir = this.getMovementDirection(sidemove, forwardmove)
     val wishspeed = if (sidemove != 0.0 || forwardmove != 0.0) this.getBaseSpeedCurrent() else 0.0
     val onGroundForReal = this.isOnGround && !jumping
-    val playerPos: BlockPos = player.blockPos
+    val playerPos: BlockPos = this.blockPos
     val blockBelowPos: BlockPos = playerPos.down()
     val blockBelow: BlockState = world.getBlockState(blockBelowPos)
 
@@ -220,8 +223,8 @@ object ReSquakePlayer {
       this.airAccelerate(wishspeed, wishdir.first, wishdir.second, airAcceleration)
 
     if (blockBelow.block is StairsBlock) {
-      this.surfOnStairs()
-
+      this.surfOnStairs(this.world)
+    }
       // Movement on top of water
       if (ReSquakeMod.config.sharkingEnabled && ReSquakeMod.config.sharkingSurfaceTension > 0.0 && jumping && this.velocity.y < 0.0) {
         val isFallingIntoWater = this.world.containsFluid(this.boundingBox.offset(this.velocity))
@@ -322,30 +325,30 @@ object ReSquakePlayer {
     this.velocity = Vec3d(x, this.velocity.y, z)
   }
   fun PlayerEntity.surfOnStairs(world: World) {
-    val blockBelow = world.getBlockState(this.blockPos.down())
+      val blockBelow = world.getBlockState(this.blockPos.down())
       
-    if (blockBelow.block is StairsBlock) {
-      val facing = blockBelow.get(Properties.HORIZONTAL_FACING)
-      val half = blockBelow.get(Properties.HALF)
-      if (half == StairsBlock.Half.TOP) return
+      if (blockBelow.block is StairsBlock) {
+          val facing = blockBelow.get(Properties.HORIZONTAL_FACING)
+          val half = blockBelow.get(Properties.HALF)
+          if (half == StairsBlock.Half.TOP) return
           
-      // Calculate the normal of the stair
-      val stairNormal = when (facing) {
-        Direction.NORTH -> Vec3d(0.0, 1.0, -1.0)
-        Direction.SOUTH -> Vec3d(0.0, 1.0, 1.0)
-        Direction.WEST  -> Vec3d(-1.0, 1.0, 0.0)
-        Direction.EAST  -> Vec3d(1.0, 1.0, 0.0)
-        else -> Vec3d(0.0, 1.0, 0.0)
-      }.normalize()
+          // Calculate the normal of the stair
+          val stairNormal = when (facing) {
+              Direction.NORTH -> Vec3d(0.0, 1.0, -1.0)
+              Direction.SOUTH -> Vec3d(0.0, 1.0, 1.0)
+              Direction.WEST  -> Vec3d(-1.0, 1.0, 0.0)
+              Direction.EAST  -> Vec3d(1.0, 1.0, 0.0)
+              else -> Vec3d(0.0, 1.0, 0.0)
+          }.normalize()
           
-      // Calculate the dot product between player's velocity and the stair's normal
-      val dot = this.velocity.dotProduct(stairNormal)
-      if (dot > 0) return
+          // Calculate the dot product between player's velocity and the stair's normal
+          val dot = this.velocity.dotProduct(stairNormal)
+          if (dot > 0) return
           
-      // Subtract the normal from the player's velocity to simulate sliding on the surface
-      val newVelocity = this.velocity.subtract(stairNormal.multiply(dot * 1.5)) // Adjust the multiplier for surf behavior
-      this.velocity = newVelocity
-    }
+          // Subtract the normal from the player's velocity to simulate sliding on the surface
+          val newVelocity = this.velocity.subtract(stairNormal.multiply(dot * 1.5)) // Adjust the multiplier for surf behavior
+          this.velocity = newVelocity
+      }
   }
   private fun PlayerEntity.applySoftCap(baseSpeed: Double, speed: Double) {
     var softCapPercent = ReSquakeMod.config.softCapThreshold
