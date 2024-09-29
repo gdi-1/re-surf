@@ -322,30 +322,30 @@ object ReSquakePlayer {
     this.velocity = Vec3d(x, this.velocity.y, z)
   }
   fun PlayerEntity.surfOnStairs(world: World) {
-      val blockBelow = world.getBlockState(this.blockPos.down())
+    val blockBelow = world.getBlockState(this.blockPos.down())
       
-      if (blockBelow.block is StairsBlock) {
-          val facing = blockBelow.get(Properties.HORIZONTAL_FACING)
-          val half = blockBelow.get(Properties.HALF)
-          if (half == StairsBlock.Half.TOP) return
+    if (blockBelow.block is StairsBlock) {
+      val facing = blockBelow.get(Properties.HORIZONTAL_FACING)
+      val half = blockBelow.get(Properties.HALF)
+      if (half == StairsBlock.Half.TOP) return
           
-          // Calculate the normal of the stair
-          val stairNormal = when (facing) {
-              Direction.NORTH -> Vec3d(0.0, 1.0, -1.0)
-              Direction.SOUTH -> Vec3d(0.0, 1.0, 1.0)
-              Direction.WEST  -> Vec3d(-1.0, 1.0, 0.0)
-              Direction.EAST  -> Vec3d(1.0, 1.0, 0.0)
-              else -> Vec3d(0.0, 1.0, 0.0)
-          }.normalize()
+      // Calculate the normal of the stair
+      val stairNormal = when (facing) {
+        Direction.NORTH -> Vec3d(0.0, 1.0, -1.0)
+        Direction.SOUTH -> Vec3d(0.0, 1.0, 1.0)
+        Direction.WEST  -> Vec3d(-1.0, 1.0, 0.0)
+        Direction.EAST  -> Vec3d(1.0, 1.0, 0.0)
+        else -> Vec3d(0.0, 1.0, 0.0)
+      }.normalize()
           
-          // Calculate the dot product between player's velocity and the stair's normal
-          val dot = this.velocity.dotProduct(stairNormal)
-          if (dot > 0) return
+      // Calculate the dot product between player's velocity and the stair's normal
+      val dot = this.velocity.dotProduct(stairNormal)
+      if (dot > 0) return
           
-          // Subtract the normal from the player's velocity to simulate sliding on the surface
-          val newVelocity = this.velocity.subtract(stairNormal.multiply(dot * 1.5)) // Adjust the multiplier for surf behavior
-          this.velocity = newVelocity
-      }
+      // Subtract the normal from the player's velocity to simulate sliding on the surface
+      val newVelocity = this.velocity.subtract(stairNormal.multiply(dot * 1.5)) // Adjust the multiplier for surf behavior
+      this.velocity = newVelocity
+    }
   }
   private fun PlayerEntity.applySoftCap(baseSpeed: Double, speed: Double) {
     var softCapPercent = ReSquakeMod.config.softCapThreshold
