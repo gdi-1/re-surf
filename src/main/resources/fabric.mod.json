@@ -1,10 +1,11 @@
 {
 	"schemaVersion": 1,
-	"id": "resquake",
+	"id": "resurf",
 	"version": "${version}",
-	"name": "re:squake",
-	"description": "Brings quake-style movement into the game.",
+	"name": "re:surf",
+	"description": "brings source-style movement into the game.",
 	"authors": [
+		"gdi",
 		"Полина",
 		"He11crow",
 		"squeek502",
